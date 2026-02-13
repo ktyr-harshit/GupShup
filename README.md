@@ -1,9 +1,9 @@
 # GupShup
-💬 Gupshup
+## 💬 Gupshup
 Gupshup is a high-performance, full-stack social networking platform designed for seamless real-time communication and interactive content sharing. Built as a flagship project for my college portfolio, it bridges the gap between micro-blogging and instant messaging.
 
 
-🌟 Key Features
+## 🌟 Key Features
 Real-time Messaging: Instant, low-latency chat functionality powered by Socket.io.
 
 Dynamic Feed: A "Twitter-style" global and personalized feed for posting updates and media.
@@ -28,5 +28,16 @@ Responsive UI: A sleek, mobile-first design that looks great on any device.
 | **Auth** | JWT (JSON Web Tokens) |
 
 
-🎓 Why I Built This
+## 🎓 Why I Built This
 This project was developed to master the complexities of asynchronous data handling and state management in a large-scale application. The biggest challenge was synchronizing the real-time chat state with the global post feed, which I solved by implementing a centralized state management pattern.
+
+
+## 📈 Learning Outcomes
+Implemented complex CRUD operations for posts and comments.
+
+Architected a real-time data flow using WebSockets.
+
+Designed a scalable database schema to handle user relationships (followers/following).
+
+Prioritized Web Security best practices including password hashing and protected routes.
+
