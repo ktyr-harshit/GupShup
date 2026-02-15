@@ -1,6 +1,6 @@
 # GupShup
 ## 💬 Gupshup
-Gupshup is a high-performance, full-stack social networking platform designed for seamless real-time communication and interactive content sharing. Built as a flagship project for my college portfolio, it bridges the gap between micro-blogging and instant messaging.
+Gupshup is a high-performance, full-stack social networking platform designed for seamless real-time communication and interactive content sharing. Built as a project for my college portfolio, it bridges the gap between micro-blogging and instant messaging.
 
 
 ## 🌟 Key Features
