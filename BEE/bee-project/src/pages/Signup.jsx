@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-function Signup({ setModal, setShowUsernameModal }) {
+function Signup({ setModal, prefillData, setIsAuthenticated }) {
   const [form, setForm] = useState({
-    username: "",
-    email: "",
+    username: prefillData?.username || "",
+    email: prefillData?.email || "",
     password: "",
     confirmPassword: "",
     month: "",
@@ -12,6 +12,8 @@ function Signup({ setModal, setShowUsernameModal }) {
   });
 
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({
@@ -29,16 +31,21 @@ function Signup({ setModal, setShowUsernameModal }) {
       return "Email is invalid";
 
     const strongPassword =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
 
-    if (!strongPassword.test(form.password)) {
-      return "Password must be at least 8 characters, include uppercase, lowercase, number and special character";
-    }
+const password = form.password.trim();
+const confirmPassword = form.confirmPassword.trim();
 
-    if (form.password !== form.confirmPassword)
-      return "Passwords do not match";
+if (!strongPassword.test(password)) {
+  return "Password must be at least 8 characters, include uppercase, lowercase, number and special character";
+}
 
-    if (!form.month || !form.day || !form.year)
+if (password !== confirmPassword) {
+  return "Passwords do not match";
+}
+
+
+    /*if (!form.month || !form.day || !form.year)
       return "Date of birth is required";
 
     const monthIndex = [
@@ -71,9 +78,9 @@ function Signup({ setModal, setShowUsernameModal }) {
       age--;
     }
 
-    if (age < 18) {
-      return "You must be at least 18 years old";
-    }
+    if (age < 13) {
+      return "You must be at least 13 years old";
+    }*/
 
     return null;
   };
@@ -108,16 +115,16 @@ function Signup({ setModal, setShowUsernameModal }) {
         return;
       }
 
-      // ✅ Store token
+      // Store token
       localStorage.setItem("token", data.token);
       localStorage.setItem("userEmail", form.email);
       localStorage.setItem("username", form.username);
 
-      // 🔥 CLOSE FIRST CARD
+      // Close signup modal
       setModal(null);
 
-      // 🔥 OPEN USERNAME CARD
-      setShowUsernameModal(true);
+      // 🔥 Trigger dashboard using state (NO reload)
+      setIsAuthenticated(true);
 
     } catch (err) {
       console.error(err);
@@ -148,7 +155,7 @@ function Signup({ setModal, setShowUsernameModal }) {
           onChange={handleChange}
         />
 
-        <div className="dob-section">
+        {/*<div className="dob-section">
           <br/>
           <label>Date of birth</label>
 
@@ -178,27 +185,67 @@ function Signup({ setModal, setShowUsernameModal }) {
               })}
             </select>
           </div>
-        </div>
+        </div>*/}
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-        />
+        <div style={{ position: "relative", width: "100%" }}>
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            style={{
+              width: "100%",
+              paddingRight: "45px"
+            }}
+          />
+
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "15px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+              fontSize: "18px"
+            }}
+          >
+            {showPassword ? "🔒" : "🔓"}
+          </span>
+        </div>
 
         <small style={{ fontSize: "12px", color: "gray" }}>
           Must contain 8+ characters, uppercase, lowercase, number & special character.
         </small>
 
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={form.confirmPassword}
-          onChange={handleChange}
-        />
+        <div style={{ position: "relative", width: "100%" }}>
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={form.confirmPassword}
+            onChange={handleChange}
+            style={{
+              width: "100%",
+              paddingRight: "45px"
+            }}
+          />
+
+          <span
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            style={{
+              position: "absolute",
+              right: "15px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+              fontSize: "18px"
+            }}
+          >
+            {showConfirmPassword ? "🔒" : "🔓"}
+          </span>
+        </div>
 
         <br/>
         <button type="submit" className="primary-btn">

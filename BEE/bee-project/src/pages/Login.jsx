@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function Login({setModal}) {
+function Login({ setModal }) {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setForm({
@@ -26,43 +27,88 @@ function Login({setModal}) {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const errorMessage = validate();
-  if (errorMessage) {
-    setError(errorMessage);
-    return;
-  }
-
-  try {
-    const res = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: form.email,
-        password: form.password,
-      }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      setError(data.message);
+    const errorMessage = validate();
+    if (errorMessage) {
+      setError(errorMessage);
       return;
     }
 
-    // ✅ Store in localStorage
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("userEmail", form.email);
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password,
+        }),
+      });
 
-    alert("Login successful!");
-  } catch (err) {
-    console.error(err);
-    setError("Something went wrong");
-  }
-};
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message);
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userEmail", form.email);
+
+      alert("Login successful!");
+      setModal(null);
+
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    if (window.google && document.getElementById("googleLoginDiv")) {
+      window.google.accounts.id.initialize({
+        client_id:
+          "234548343118-jaofp1sntu3uqcnomsjurjgj6aoooblv.apps.googleusercontent.com",
+        callback: async (response) => {
+          try {
+            const res = await fetch("http://localhost:5000/api/auth/google", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ token: response.credential }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+              alert(data.message);
+              return;
+            }
+
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+
+            alert("Google Login Successful!");
+            setModal(null);
+
+          } catch (err) {
+            console.error(err);
+            alert("Google login failed");
+          }
+        },
+      });
+
+      window.google.accounts.id.renderButton(
+        document.getElementById("googleLoginDiv"),
+        {
+          theme: "outline",
+          size: "large",
+          width: "100%",
+        }
+      );
+    }
+  }, []);
 
   return (
     <div className="form-card">
@@ -80,17 +126,35 @@ function Login({setModal}) {
         />
 
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Password"
           value={form.password}
           onChange={handleChange}
         />
 
-        <button type="submit" className="primary-btn" style={{marginTop: "20px"}}>
+        <div style={{ marginTop: "10px" }}>
+  <label style={{ fontSize: "14px" }}>
+    <input
+      type="checkbox"
+      checked={showPassword}
+      onChange={() => setShowPassword(!showPassword)}
+      style={{ marginRight: "6px" }}
+    />
+    Show Password
+  </label>
+</div>
+
+
+        <button type="submit" className="primary-btn" style={{ marginTop: "20px" }}>
           Login
         </button>
       </form>
+
+      <center style={{ margin: "15px 0" }}>OR</center>
+
+      <div id="googleLoginDiv"></div>
+
       <p>
         Don't have an account?{" "}
         <span

@@ -30,6 +30,16 @@ body {
   font-weight: bold;
 }
 
+.logo img {
+  width: 200px;     /* change size */
+  height: auto;
+}
+.left-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Right Panel */
 .right-panel {
   flex: 1;
@@ -56,11 +66,11 @@ body {
   cursor: pointer;
 }
 
-#googleButtonDiv {
+#googlesigninDiv {
   width: 100%;
 }
 
-#googleButtonDiv > div {
+#googlesigninDiv > div {
   width: 100% !important;
 
 }
@@ -72,14 +82,14 @@ body {
 }
 
 .primary-btn {
-  background: black;
+  background: linear-gradient(45deg,#3CD5B5, #4D71DC, #D163C5);
   color: white;
   border: none;
   padding: 15px;
 }
 
 .primary-btn:hover {
-  background-color: rgb(47, 47, 47);
+  background: linear-gradient(45deg,#3cd5b4ad, #4d71dcab, #d163c4ab);
   transition-duration: 0.2s;
 }
 
@@ -108,7 +118,10 @@ body {
 }
 
 .modal-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.08); /* glass effect */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #fff;
   width: 550px;
   padding: 60px;
   border-radius: 20px;
@@ -133,6 +146,7 @@ body {
   background: none;
   font-size: 20px;
   cursor: pointer;
+  color: #fff;
 }
 
 /* Form */
@@ -190,4 +204,90 @@ body {
 .error-msg {
   color: red;
   font-size: 15px;
+}
+
+.mobile-logo {
+  display: none;
+}
+
+/* ===== LIGHT MODE (Default) ===== */
+body.light {
+  background: #ffffff;
+  color: #000000;
+}
+
+body.light .left-panel {
+  background: #000;
+  color: #fff;
+}
+
+body.light .right-panel {
+  background: white;
+}
+
+/* ===== DARK MODE ===== */
+body.dark {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+body.dark .left-panel {
+  background: #000;
+}
+
+body.dark .right-panel {
+  background: #1e1e1e;
+}
+
+/* ===== Modal Card Dark Support ===== */
+body.dark .modal-card {
+  background: rgba(30, 30, 30, 0.6);
+}
+
+/* ===== Toggle Button Styling ===== */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  border: none;
+  cursor: pointer;
+  background: none;
+  margin: 10px;
+}
+
+
+/* 📱 Mobile Responsive */
+@media (max-width: 550px) {
+
+  .left-panel {
+    display: none;
+  }
+
+  .right-panel {
+    flex: 1;
+    width: 100%;
+    padding: 40px 25px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .mobile-logo {
+    display: block;
+    margin: 20px 0px;
+  }
+
+  .mobile-logo img {
+    width: 90px;
+    height: auto;
+  }
+
+  .mobile-logo .grey, .mobile-logo .white {
+    display: none
+  }
+  body.light .mobile-logo .grey {
+    display: block;
+  }
+  body.dark .mobile-logo .white {
+    display: block
+  }
 }
