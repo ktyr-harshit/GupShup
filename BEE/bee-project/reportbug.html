@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Report a Bug</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: #f1f5f9;
+      color: #0f172a;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    main {
+      max-width: 780px;
+      width: min(780px, 100%);
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #dbe4ef;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    input,
+    textarea,
+    button {
+      width: 100%;
+      font: inherit;
+      border: 1px solid #cdd9e7;
+      border-radius: 10px;
+      padding: 11px 12px;
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 18px;
+      background: #0f172a;
+      color: #fff;
+      cursor: pointer;
+      border: 0;
+      padding: 12px 14px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 16px;
+      color: #1d4e7a;
+      text-decoration: none;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.52);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(420px, 100%);
+      background: #ffffff;
+      border: 1px solid #dbe4ef;
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+      text-align: center;
+    }
+
+    .modal-card h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+    }
+
+    .modal-card p {
+      margin: 0;
+    }
+
+    .modal-card button {
+      margin-top: 16px;
+      width: auto;
+      min-width: 120px;
+      padding: 10px 16px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Report a Bug</h1>
+    <p>
+      Share what happened, how to reproduce it, and which device/browser you are using. This helps us fix issues faster.
+    </p>
+
+    <form id="bugForm">
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="you@example.com" />
+
+      <label for="title">Issue title</label>
+      <input id="title" type="text" placeholder="Short summary" />
+
+      <label for="details">Details</label>
+      <textarea id="details" placeholder="Steps to reproduce, expected result, actual result"></textarea>
+
+      <button type="submit" id="submitBtn">Submit report</button>
+    </form>
+
+    <a class="back" href="helpcenter.html">Back to Help Center</a>
+  </main>
+
+  <div class="modal" id="successModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">Report submitted</h2>
+      <p id="modalMessage">Your bug report has been sent successfully.</p>
+      <button type="button" id="closeModalBtn">OK</button>
+    </div>
+  </div>
+
+  <script>
+    const BUG_STORAGE_KEY = 'gs_bug_reports';
+    const bugForm = document.getElementById('bugForm');
+    const successModal = document.getElementById('successModal');
+    const submitBtn = document.getElementById('submitBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const emailInput = document.getElementById('email');
+    const titleInput = document.getElementById('title');
+    const detailsInput = document.getElementById('details');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
+
+    function openModal(title, message) {
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+      successModal.classList.add('open');
+      successModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function loadReports() {
+      try {
+        return JSON.parse(localStorage.getItem(BUG_STORAGE_KEY) || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function saveReports(reports) {
+      localStorage.setItem(BUG_STORAGE_KEY, JSON.stringify(reports));
+    }
+
+    bugForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      const title = titleInput.value.trim();
+      const details = detailsInput.value.trim();
+      const emailRegex = /\S+@\S+\.\S+/;
+
+      if (!email || !title || !details) {
+        openModal('Submission failed', 'Fill the required fields');
+        return;
+      }
+
+      if (!emailRegex.test(email)) {
+        openModal('Submission failed', 'Incorrect credential');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      try {
+        const reports = loadReports();
+        reports.unshift({
+          id: `bug_${Date.now()}`,
+          email,
+          title,
+          details,
+          status: 'pending',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+        saveReports(reports);
+
+        openModal('Submitted successfully', 'Submitted successfully');
+        bugForm.reset();
+      } catch (error) {
+        console.error('Bug report local save failed:', error);
+        openModal('Submission failed', 'Error submitting report');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit report';
+      }
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      successModal.classList.remove('open');
+      successModal.setAttribute('aria-hidden', 'true');
+    });
+
+    successModal.addEventListener('click', (event) => {
+      if (event.target === successModal) {
+        successModal.classList.remove('open');
+        successModal.setAttribute('aria-hidden', 'true');
+      }
+    });
+  </script>
+</body>
+</html>

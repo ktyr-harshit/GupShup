@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --line: #dbe4ef;
+      --white: #ffffff;
+      --hero-bg: #050709;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    .site-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 24px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 230px;
+    }
+
+    .gs-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #000;
+      border: 1px solid #0f172a;
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.16);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      color: #334155;
+      text-decoration: none;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links a.active {
+      border-color: #0f172a;
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    .hero {
+      min-height: 400px;
+      color: #fff;
+      padding: 72px clamp(20px, 8vw, 110px);
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 28px;
+      background:
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1), transparent 56%),
+        radial-gradient(circle at 18% 85%, rgba(255, 255, 255, 0.07), transparent 48%),
+        repeating-linear-gradient(67deg, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 90px),
+        repeating-linear-gradient(141deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 78px),
+        var(--hero-bg);
+      border-bottom: 1px solid #111827;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      max-width: 760px;
+      align-self: center;
+    }
+
+    .hero-kicker {
+      margin: 0 0 12px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(44px, 8vw, 92px);
+      line-height: 0.95;
+      letter-spacing: -1.8px;
+    }
+
+    .hero-mark {
+      align-self: center;
+      justify-self: center;
+      width: min(42vw, 520px);
+      max-width: 100%;
+      border-radius: 24px;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.45));
+    }
+
+    .content-wrap {
+      max-width: 1460px;
+      margin: 30px auto;
+      padding: 0 24px 24px;
+    }
+
+    .content {
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+      color: #334155;
+      line-height: 1.6;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .content h3 {
+      margin: 18px 0 10px;
+      color: #0f172a;
+      font-size: 24px;
+      letter-spacing: 0.2px;
+    }
+
+    .content p,
+    .content li {
+      font-size: 17px;
+      text-align: justify;
+    }
+
+    .content ul {
+      margin-top: 8px;
+      padding-left: 22px;
+    }
+
+    .site-footer {
+      position: relative;
+      border-top: 1px solid var(--line);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .footer-links a {
+      color: #334155;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #0f172a;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1180px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-mark {
+        display: none;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .brand h1 {
+        font-size: 26px;
+      }
+
+      .hero {
+        min-height: 360px;
+        padding: 48px 24px;
+      }
+
+      .content-wrap {
+        padding: 0 16px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img class="gs-logo" src="gupshup-logo.png" alt="Gupshup logo" />
+      <h1>Terms of Service</h1>
+    </div>
+
+    <nav class="nav-links" aria-label="Policy links">
+      <a href="privacypolicy.html">Privacy Policy</a>
+      <a href="Terms.html" class="active">Terms of Service</a>
+      <a href="helpcenter.html">Help Center</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-label="Terms heading">
+    <div class="hero-left">
+      <p class="hero-kicker"></p>
+      <h2>Terms of<br />Service</h2>
+    </div>
+    <img class="hero-mark" src="gupshup-logo.png" alt="Gupshup" />
+  </section>
+
+  <main class="content-wrap">
+    <article class="content">
+      <p><strong>Effective Date:</strong> January 15, 2026</p>
+      <p>
+        These Terms of Service ("Terms") govern your access to and use of our real-time chatting application, website, and related services (collectively, the "Service"). By creating an account or using the Service, you agree to these Terms.
+      </p>
+
+      <h3>1. Eligibility and Accounts</h3>
+      <ul>
+        <li>You must be at least 13 years old (or the minimum age required in your region) to use the Service.</li>
+        <li>You are responsible for maintaining the security of your account credentials.</li>
+        <li>You are responsible for all activity that occurs under your account.</li>
+        <li>You must provide accurate information and keep your account details up to date.</li>
+      </ul>
+
+      <h3>2. Acceptable Use</h3>
+      <p>You agree not to use the Service to:</p>
+      <ul>
+        <li>Harass, threaten, abuse, or harm others.</li>
+        <li>Share illegal, fraudulent, defamatory, or hateful content.</li>
+        <li>Send spam, scams, malware, or unauthorized advertising.</li>
+        <li>Impersonate another person or organization.</li>
+        <li>Attempt to access accounts, systems, or data without authorization.</li>
+        <li>Interfere with or disrupt the reliability or performance of the Service.</li>
+      </ul>
+
+      <h3>3. User Content</h3>
+      <ul>
+        <li>You retain ownership of messages, media, and other content you submit ("User Content").</li>
+        <li>You grant us a limited license to host, store, process, and display User Content solely to operate and improve the Service.</li>
+        <li>You are responsible for ensuring your User Content does not violate laws or third-party rights.</li>
+      </ul>
+
+      <h3>4. Moderation and Enforcement</h3>
+      <ul>
+        <li>We may review reports, investigate misuse, and take action to protect users and the Service.</li>
+        <li>We may remove content or suspend or terminate accounts that violate these Terms or applicable law.</li>
+        <li>We may cooperate with lawful requests from authorities when required.</li>
+      </ul>
+
+      <h3>5. Privacy and Data</h3>
+      <p>
+        Your use of the Service is also governed by our Privacy Policy. By using the Service, you acknowledge that internet transmissions are never completely secure and that we cannot guarantee absolute security.
+      </p>
+
+      <h3>6. Service Availability</h3>
+      <ul>
+        <li>We strive to keep the Service available, but we do not guarantee uninterrupted or error-free operation.</li>
+        <li>We may modify, suspend, or discontinue features at any time.</li>
+        <li>We may perform maintenance that temporarily limits access.</li>
+      </ul>
+
+      <h3>7. Third-Party Services</h3>
+      <p>
+        The Service may include integrations or links to third-party services. We are not responsible for third-party content, policies, or practices.
+      </p>
+
+      <h3>8. Termination</h3>
+      <ul>
+        <li>You may stop using the Service at any time.</li>
+        <li>We may suspend or terminate your access if you violate these Terms or create risk for users or the Service.</li>
+        <li>Upon termination, your right to use the Service ends immediately.</li>
+      </ul>
+
+      <h3>9. Disclaimers</h3>
+      <p>
+        The Service is provided on an "AS IS" and "AS AVAILABLE" basis to the fullest extent allowed by law, without warranties of any kind, express or implied.
+      </p>
+
+      <h3>10. Limitation of Liability</h3>
+      <p>
+        To the maximum extent permitted by law, we are not liable for indirect, incidental, special, consequential, or punitive damages, or loss of data, profits, or business arising from your use of the Service.
+      </p>
+
+      <h3>11. Indemnification</h3>
+      <p>
+        You agree to indemnify and hold harmless the Service and its operators from claims, liabilities, damages, losses, and expenses arising out of your use of the Service, your User Content, or your violation of these Terms.
+      </p>
+
+      <h3>12. Changes to These Terms</h3>
+      <p>
+        We may update these Terms from time to time. If we make material changes, we will update the date in this page and provide notice where required.
+      </p>
+
+      <h3>13. Governing Law</h3>
+      <p>
+        These Terms are governed by the laws of the jurisdiction where the Service operator is established, without regard to conflict of law principles.
+      </p>
+
+      <h3>14. Contact</h3>
+      <p>
+        For questions about these Terms, contact us at <strong>support@yourchatapp.com</strong>.
+      </p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <span>© 2026 GS Chat</span>
+      <a href="helpcenter.html">Help Center</a>
+      <a href="reportbug.html">Report a bug</a>
+      <a href="Terms.html">Terms of Service</a>
+      <a href="privacypolicy.html">Privacy Policy</a>
+      <a href="mailto:support@yourchatapp.com">Contact</a>
+    </div>
+  </footer>
+</body>
+</html>

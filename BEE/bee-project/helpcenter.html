@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GS Help Center</title>
+  <style>
+    :root {
+      --header-h: 86px;
+      --bg: #f1f5f9;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --line: #dbe4ef;
+      --white: #ffffff;
+      --accent: #2b8bc7;
+      --hero-bg: #050709;
+      --chip: #eef5fb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-h);
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 30;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 230px;
+    }
+
+    .gs-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #000;
+      border: 1px solid #0f172a;
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.16);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .top-nav a {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      color: #334155;
+      font-size: 16px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-nav a:hover {
+      background: #eff6ff;
+      color: #0f172a;
+    }
+
+    .top-nav a.active {
+      border-color: #0f172a;
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    .scroll-shell {
+      position: fixed;
+      top: var(--header-h);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow-y: auto;
+      background: var(--bg);
+    }
+
+    .hero {
+      min-height: 520px;
+      position: relative;
+      color: #fff;
+      padding: 72px clamp(20px, 8vw, 110px);
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 28px;
+      background:
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1), transparent 56%),
+        radial-gradient(circle at 18% 85%, rgba(255, 255, 255, 0.07), transparent 48%),
+        repeating-linear-gradient(67deg, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 90px),
+        repeating-linear-gradient(141deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 78px),
+        var(--hero-bg);
+      border-bottom: 1px solid #111827;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      max-width: 760px;
+      align-self: center;
+    }
+
+    .hero-kicker {
+      margin: 0 0 12px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(44px, 8vw, 92px);
+      line-height: 0.95;
+      letter-spacing: -1.8px;
+    }
+
+    .hero-search {
+      margin-top: 28px;
+      position: relative;
+    }
+
+    .hero-search input {
+      width: 100%;
+      height: 58px;
+      border: 0;
+      border-radius: 10px;
+      padding: 0 56px 0 20px;
+      font-size: 22px;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .hero-search .search-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #1e293b;
+      font-size: 24px;
+    }
+
+    .hero-mark {
+      align-self: center;
+      justify-self: center;
+      width: min(42vw, 520px);
+      max-width: 100%;
+      border-radius: 24px;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.45));
+    }
+
+    .content {
+      max-width: 1240px;
+      margin: 30px auto;
+      padding: 0 20px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    }
+
+    .panel h3 {
+      margin: 0 0 16px;
+      font-size: 24px;
+      letter-spacing: 0.2px;
+    }
+
+    .panel p {
+      margin: 0 0 15px;
+      line-height: 1.6;
+      color: #334155;
+    }
+
+    .chip {
+      display: inline-block;
+      background: var(--chip);
+      color: #1d4e7a;
+      border: 1px solid #cfe4f4;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin: 0 8px 10px 0;
+    }
+
+    details {
+      border-top: 1px solid #e6eef6;
+      padding: 14px 0;
+    }
+
+    details:last-child {
+      border-bottom: 1px solid #e6eef6;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: #0f172a;
+      padding-right: 18px;
+    }
+
+    details p {
+      margin: 10px 0 0;
+      color: #475569;
+    }
+
+    .whats-new {
+      max-width: 1240px;
+      margin: 6px auto 34px;
+      padding: 0 20px;
+    }
+
+    .whats-new h3 {
+      margin: 0 0 18px;
+      font-size: 42px;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      color: #0f172a;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+      overflow: visible;
+      min-height: 230px;
+    }
+
+    .feature-media {
+      height: 118px;
+      border-radius: 14px 14px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 68% 30%, rgba(255, 255, 255, 0.1), transparent 54%),
+        repeating-linear-gradient(67deg, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 90px),
+        repeating-linear-gradient(141deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 78px),
+        #050709;
+    }
+
+    .feature-media img {
+      width: 74px;
+      height: 74px;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .feature-body {
+      padding: 16px 16px 18px;
+    }
+
+    .feature-tag {
+      display: inline-block;
+      background: #e9f2fb;
+      border: 1px solid #cfe4f4;
+      color: #1d4e7a;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .feature-title {
+      margin: 12px 0 0;
+      font-size: 33px;
+      line-height: 1.1;
+      letter-spacing: -0.4px;
+      color: #1f2937;
+    }
+
+    .feature-summary {
+      margin: 10px 0 0;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #334155;
+    }
+
+    .feature-btn {
+      margin-top: 14px;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      color: #1f2937;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .feature-btn:hover {
+      background: #eff6ff;
+    }
+
+    .feature-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 90;
+    }
+
+    .feature-modal.open {
+      display: flex;
+    }
+
+    .feature-modal-card {
+      width: min(560px, 100%);
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.28);
+      padding: 22px;
+    }
+
+    .feature-modal-card h4 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+
+    .feature-modal-card p {
+      margin: 0;
+      color: #334155;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .feature-modal-close {
+      margin-top: 16px;
+      min-height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 0;
+      background: #0f172a;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .focus-flash {
+      animation: focusPulse 1.1s ease;
+    }
+
+    @keyframes focusPulse {
+      0% { background: rgba(191, 219, 254, 0.6); }
+      100% { background: transparent; }
+    }
+
+    .site-footer {
+      position: relative;
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .footer-links a {
+      color: #334155;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #0f172a;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1180px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-mark {
+        display: none;
+      }
+
+      .hero-search input {
+        font-size: 19px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .site-header {
+        flex-wrap: wrap;
+        align-content: center;
+        gap: 8px;
+        height: auto;
+        min-height: 118px;
+        padding: 12px;
+      }
+
+      :root {
+        --header-h: 118px;
+      }
+
+      .brand h1 {
+        font-size: 26px;
+      }
+
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero {
+        min-height: 430px;
+        padding-top: 48px;
+      }
+
+      .hero-search input {
+        font-size: 17px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .top-nav {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .hero h2 {
+        font-size: 56px;
+      }
+
+      .hero-search input {
+        font-size: 16px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img class="gs-logo" src="gupshup-logo.png" alt="Gupshup logo" />
+      <h1>Help Center</h1>
+    </div>
+
+    <nav class="top-nav" aria-label="Help links">
+      <a href="privacypolicy.html">Privacy Policy</a>
+      <a href="Terms.html">Terms of Service</a>
+      <a href="reportbug.html" class="active">Report a bug</a>
+    </nav>
+  </header>
+
+  <main class="scroll-shell">
+    <section class="hero" aria-label="Help hero">
+      <div class="hero-left">
+        <p class="hero-kicker">Contact us</p>
+        <h2>We can help.</h2>
+        <div class="hero-search">
+          <input id="heroSearch" type="search" placeholder="Search" aria-label="Search all help articles" list="helpSearchSuggestions" />
+          <span class="search-icon" aria-hidden="true">⌕</span>
+        </div>
+      </div>
+      <img class="hero-mark" src="gupshup-logo.png" alt="Gupshup" />
+    </section>
+
+    <section class="content" aria-label="Help articles">
+      <article class="panel" id="community-guidelines" data-search-title="Community Guidelines" data-search-keywords="community guidelines rules safety respect">
+        <h3>Community Guidelines</h3>
+        <span class="chip">Respect first</span>
+        <span class="chip">No abuse</span>
+        <span class="chip">Protect privacy</span>
+        <span class="chip">No spam</span>
+        <p id="guideline-respect" data-search-title="Guideline: Respectful behavior" data-search-keywords="respect community harassment hate threats abuse">
+          Our community is built for safe and meaningful real-time conversation. Keep discussions respectful, avoid personal attacks, and do not post threatening, hateful, or harassing content.
+        </p>
+        <p id="guideline-privacy" data-search-title="Guideline: Protect personal information" data-search-keywords="privacy personal information otp passwords address phone">
+          Do not share private information such as phone numbers, OTP codes, addresses, passwords, or financial details. If someone pressures you for this data, stop chatting and report the account.
+        </p>
+        <p id="guideline-security" data-search-title="Guideline: Security and anti-scam" data-search-keywords="scam malware impersonation account security suspension">
+          Any attempt to distribute malware, run scams, impersonate another user, or bypass account security may result in immediate account suspension.
+        </p>
+        <p id="guideline-reporting" data-search-title="Guideline: Reporting harmful behavior" data-search-keywords="report moderation harmful behavior in-app reporting">
+          Report harmful behavior using in-app reporting tools or through the Report a bug option in the menu. Our moderation team reviews reports and can remove content or restrict accounts.
+        </p>
+      </article>
+
+      <article class="panel">
+        <h3>FAQs</h3>
+
+        <details id="faq-reset-password" data-search-title="FAQ: How do I reset my password?" data-search-keywords="reset password forgot password sign in email" open>
+          <summary>How do I reset my password?</summary>
+          <p>Go to Sign In, click Forgot password, and follow the reset link sent to your registered email address.</p>
+        </details>
+
+        <details id="faq-block-report" data-search-title="FAQ: How can I block or report someone?" data-search-keywords="block report user abuse safety">
+          <summary>How can I block or report someone?</summary>
+          <p>Open the user profile in chat, choose Block or Report, and include details so we can investigate faster.</p>
+        </details>
+
+        <details id="faq-delayed-messages" data-search-title="FAQ: Why are messages delayed?" data-search-keywords="delayed messages network reconnect session sync">
+          <summary>Why are messages delayed?</summary>
+          <p>This usually happens on unstable networks. Reconnect to a stronger connection or restart the app to re-sync your session.</p>
+        </details>
+
+        <details id="faq-delete-account" data-search-title="FAQ: Can I delete my account permanently?" data-search-keywords="delete account permanently remove account settings">
+          <summary>Can I delete my account permanently?</summary>
+          <p>Yes. Go to account settings, select Delete account, and confirm. This action cannot be undone.</p>
+        </details>
+
+        <details id="faq-legal-policies" data-search-title="FAQ: Where do I find legal policies?" data-search-keywords="legal policies terms privacy policy links">
+          <summary>Where do I find your legal policies?</summary>
+          <p>Use the footer links to open the Terms of Service and Privacy Policy pages.</p>
+        </details>
+      </article>
+    </section>
+
+    <section class="whats-new" aria-label="Whats on gs">
+      <h3>Whats on gs</h3>
+      <div class="feature-grid">
+        <article class="feature-card" id="feature-real-time-chat" data-search-title="Real time chat" data-search-keywords="real time chat instant messages group chat">
+          <div class="feature-media"><img src="gupshup-logo.png" alt="Gupshup" /></div>
+          <div class="feature-body">
+            <span class="feature-tag">Messaging</span>
+            <h4 class="feature-title">Real time chat</h4>
+            <p class="feature-summary">Live one-to-one and group messaging with instant delivery and read receipts.</p>
+            <button class="feature-btn" type="button" data-feature-title="Real time chat" data-feature-detail="GS real time chat keeps every conversation synchronized instantly across devices. You can create private chats, group rooms, share files, and see typing and read status in seconds. Smart notifications ensure you do not miss important updates while reducing noise from low-priority threads.">Read more</button>
+          </div>
+        </article>
+
+        <article class="feature-card" id="feature-audio-video-calling" data-search-title="Audio video calling" data-search-keywords="audio video calling voice call group call">
+          <div class="feature-media"><img src="gupshup-logo.png" alt="Gupshup" /></div>
+          <div class="feature-body">
+            <span class="feature-tag">Calling</span>
+            <h4 class="feature-title">Audio video calling</h4>
+            <p class="feature-summary">Switch between voice and video calls with stable quality and low delay.</p>
+            <button class="feature-btn" type="button" data-feature-title="Audio video calling" data-feature-detail="GS supports smooth audio and video calling for both personal and team conversations. Start voice calls, upgrade to video in one click, or join quick group calls when collaboration is urgent. Adaptive quality helps calls remain stable even when network conditions fluctuate.">Read more</button>
+          </div>
+        </article>
+
+        <article class="feature-card" id="feature-end-to-end-encryption" data-search-title="End to end encryption" data-search-keywords="end to end encryption security privacy">
+          <div class="feature-media"><img src="gupshup-logo.png" alt="Gupshup" /></div>
+          <div class="feature-body">
+            <span class="feature-tag">Security</span>
+            <h4 class="feature-title">End to end encryption</h4>
+            <p class="feature-summary">Private conversations are protected so only participants can access messages.</p>
+            <button class="feature-btn" type="button" data-feature-title="End to end encryption" data-feature-detail="Sensitive conversations on GS are secured with end-to-end encryption to protect your message privacy. Encryption keys are managed so that chat content remains unreadable to third parties in transit. Combined with account safety controls, this helps keep personal and business communication protected.">Read more</button>
+          </div>
+        </article>
+
+        <article class="feature-card" id="feature-microblogging" data-search-title="Microblogging" data-search-keywords="microblogging posts feed social">
+          <div class="feature-media"><img src="gupshup-logo.png" alt="Gupshup" /></div>
+          <div class="feature-body">
+            <span class="feature-tag">Social</span>
+            <h4 class="feature-title">Microblogging</h4>
+            <p class="feature-summary">Post short updates, media, and thoughts that followers can react to quickly.</p>
+            <button class="feature-btn" type="button" data-feature-title="Microblogging" data-feature-detail="GS microblogging lets you publish concise posts, images, and links to share ideas in real time. Followers can comment, repost, and react, helping conversations spread naturally. This gives you a lightweight way to broadcast announcements and community updates without leaving the platform.">Read more</button>
+          </div>
+        </article>
+
+        <article class="feature-card" id="feature-chat-support" data-search-title="Chat support" data-search-keywords="chat support help center support team">
+          <div class="feature-media"><img src="gupshup-logo.png" alt="Gupshup" /></div>
+          <div class="feature-body">
+            <span class="feature-tag">Support</span>
+            <h4 class="feature-title">Chat support</h4>
+            <p class="feature-summary">Get quick support through in-app conversations whenever issues appear.</p>
+            <button class="feature-btn" type="button" data-feature-title="Chat support" data-feature-detail="When you need help, GS chat support provides direct in-app assistance for account, billing, and technical issues. Support flows are designed for quick triage so your issue reaches the right team faster. You can share screenshots and context directly in the thread for more accurate resolution.">Read more</button>
+          </div>
+        </article>
+
+        <article class="feature-card" id="feature-whats-trending" data-search-title="Whats trending" data-search-keywords="whats trending trends discover topics">
+          <div class="feature-media"><img src="gupshup-logo.png" alt="Gupshup" /></div>
+          <div class="feature-body">
+            <span class="feature-tag">Discover</span>
+            <h4 class="feature-title">Whats trending</h4>
+            <p class="feature-summary">Track popular topics and fast-rising conversations across the community.</p>
+            <button class="feature-btn" type="button" data-feature-title="Whats trending" data-feature-detail="The trending panel highlights high-activity topics so you can follow what people are discussing right now. It updates continuously with fresh signals from across public conversations. This helps creators, teams, and users discover relevant discussions and respond at the right time.">Read more</button>
+          </div>
+        </article>
+      </div>
+    </section>
+    <footer class="site-footer">
+      <div class="footer-links">
+        <span>© 2026 GS Chat</span>
+        <a href="helpcenter.html">Help Center</a>
+        <a href="reportbug.html">Report a bug</a>
+        <a href="Terms.html">Terms of Service</a>
+        <a href="privacypolicy.html">Privacy Policy</a>
+        <a href="mailto:support@yourchatapp.com">Contact</a>
+      </div>
+    </footer>
+  </main>
+
+  <div class="feature-modal" id="featureModal" aria-hidden="true">
+    <div class="feature-modal-card" role="dialog" aria-modal="true" aria-labelledby="featureModalTitle">
+      <h4 id="featureModalTitle">Feature</h4>
+      <p id="featureModalText"></p>
+      <button type="button" class="feature-modal-close" id="featureModalClose">Close</button>
+    </div>
+  </div>
+
+  <datalist id="helpSearchSuggestions">
+    <option value="Community Guidelines"></option>
+    <option value="FAQ: How do I reset my password?"></option>
+    <option value="FAQ: How can I block or report someone?"></option>
+    <option value="FAQ: Why are messages delayed?"></option>
+    <option value="FAQ: Can I delete my account permanently?"></option>
+    <option value="FAQ: Where do I find legal policies?"></option>
+    <option value="Real time chat"></option>
+    <option value="Audio video calling"></option>
+    <option value="End to end encryption"></option>
+    <option value="Microblogging"></option>
+    <option value="Chat support"></option>
+    <option value="Whats trending"></option>
+  </datalist>
+
+  <script>
+    const heroSearch = document.getElementById('heroSearch');
+    const searchableNodes = Array.from(document.querySelectorAll('[data-search-title]'));
+    const featureButtons = document.querySelectorAll('.feature-btn');
+    const featureModal = document.getElementById('featureModal');
+    const featureModalTitle = document.getElementById('featureModalTitle');
+    const featureModalText = document.getElementById('featureModalText');
+    const featureModalClose = document.getElementById('featureModalClose');
+
+    function openTopic(node) {
+      if (!node) return;
+      if (node.tagName === 'DETAILS') {
+        node.open = true;
+      }
+      node.classList.add('focus-flash');
+      node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => node.classList.remove('focus-flash'), 1200);
+    }
+
+    function getMatches(query) {
+      const q = query.trim().toLowerCase();
+      if (!q) return [];
+      return searchableNodes
+        .map((node) => ({
+          id: node.id,
+          title: node.dataset.searchTitle,
+          key: `${node.dataset.searchTitle} ${node.dataset.searchKeywords || ''}`.toLowerCase(),
+        }))
+        .filter((item) => item.key.includes(q))
+        .slice(0, 8);
+    }
+
+    function handleEnter(input, event) {
+      if (event.key !== 'Enter') return;
+      const matches = getMatches(input.value);
+      if (!matches.length) return;
+      event.preventDefault();
+      const node = document.getElementById(matches[0].id);
+      openTopic(node);
+    }
+
+    heroSearch.addEventListener('keydown', (event) => handleEnter(heroSearch, event));
+
+    featureButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        featureModalTitle.textContent = button.dataset.featureTitle || 'Feature';
+        featureModalText.textContent = button.dataset.featureDetail || '';
+        featureModal.classList.add('open');
+        featureModal.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    featureModalClose.addEventListener('click', () => {
+      featureModal.classList.remove('open');
+      featureModal.setAttribute('aria-hidden', 'true');
+    });
+
+    featureModal.addEventListener('click', (event) => {
+      if (event.target === featureModal) {
+        featureModal.classList.remove('open');
+        featureModal.setAttribute('aria-hidden', 'true');
+      }
+    });
+  </script>
+</body>
+</html>

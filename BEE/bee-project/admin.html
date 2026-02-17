@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GS Admin Panel</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --ink: #0f172a;
+      --line: #dbe4ef;
+      --white: #ffffff;
+      --muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    .site-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 24px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .gs-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #000;
+      border: 1px solid #0f172a;
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.16);
+    }
+
+    .site-header h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .logout-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      color: #334155;
+      cursor: pointer;
+      font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logout-btn:hover {
+      background: #eff6ff;
+      color: #0f172a;
+    }
+
+    .admin-layout {
+      max-width: 1380px;
+      margin: 26px auto;
+      padding: 0 20px 26px;
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
+      min-height: 620px;
+    }
+
+    .panel-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: #f8fbff;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0.2px;
+    }
+
+    .panel-body {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .bug-item {
+      width: 100%;
+      text-align: left;
+      border: 1px solid #d6e4f2;
+      border-radius: 10px;
+      padding: 12px 12px;
+      background: #ffffff;
+      cursor: pointer;
+    }
+
+    .bug-item:hover {
+      background: #f8fbff;
+      border-color: #b5d1ea;
+    }
+
+    .bug-item.active {
+      background: #ebf5ff;
+      border-color: #8ebee7;
+    }
+
+    .bug-title {
+      display: block;
+      font-size: 16px;
+      color: #0f172a;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .bug-meta {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .detail-area {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      min-height: 268px;
+    }
+
+    .detail-area h3 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      color: #0f172a;
+      letter-spacing: 0.2px;
+    }
+
+    .detail-meta {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .detail-text {
+      margin: 0;
+      color: #334155;
+      line-height: 1.6;
+      font-size: 15px;
+      white-space: pre-wrap;
+    }
+
+    .detail-empty {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 0;
+    }
+
+    .resolve-btn {
+      margin-top: 14px;
+      min-height: 42px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 999px;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .resolved-area {
+      padding: 16px 18px;
+    }
+
+    .resolved-area h4 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #0f172a;
+    }
+
+    .resolved-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .resolved-list li {
+      border: 1px solid #d6e4f2;
+      border-radius: 10px;
+      background: #f8fbff;
+      padding: 10px 12px;
+      color: #1f2937;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .resolved-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .delete-btn {
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid #e2b8be;
+      background: #fff1f2;
+      color: #991b1b;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .delete-btn:hover {
+      background: #ffe4e6;
+    }
+
+    .resolved-empty {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    @media (max-width: 1020px) {
+      .admin-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        min-height: auto;
+      }
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+      padding: 14px 10px 18px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-left">
+      <img class="gs-logo" src="gupshup-logo.png" alt="Gupshup logo" />
+      <h1>Admin Panel</h1>
+    </div>
+    <button class="logout-btn" id="logoutBtn" type="button" aria-label="Logout" title="Logout">↪</button>
+  </header>
+
+  <main class="admin-layout">
+    <section class="panel" aria-label="Reported bugs">
+      <div class="panel-head">
+        <h2>Reported Bugs</h2>
+      </div>
+      <div class="panel-body" id="bugList"></div>
+    </section>
+
+    <section class="panel" aria-label="Issue details and resolved list">
+      <div class="panel-head">
+        <h2>Issue Details</h2>
+      </div>
+
+      <div class="detail-area" id="detailArea">
+        <p class="detail-empty">Click a reported bug from the left panel to view full details here.</p>
+      </div>
+
+      <div class="resolved-area">
+        <h4>Resolved Issues</h4>
+        <ul class="resolved-list" id="resolvedList"></ul>
+        <p class="resolved-empty" id="resolvedEmpty">No issues resolved yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">© 2026 @GSAdmin</footer>
+
+  <script>
+    const BUG_STORAGE_KEY = "gs_bug_reports";
+
+    const bugList = document.getElementById("bugList");
+    const detailArea = document.getElementById("detailArea");
+    const resolvedList = document.getElementById("resolvedList");
+    const resolvedEmpty = document.getElementById("resolvedEmpty");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    let reports = [];
+    let selectedId = null;
+
+    function formatTime(value) {
+      if (!value) return "Unknown time";
+      return new Date(value).toLocaleString();
+    }
+
+    function loadReports() {
+      try {
+        reports = JSON.parse(localStorage.getItem(BUG_STORAGE_KEY) || "[]");
+      } catch (error) {
+        console.error(error);
+        reports = [];
+      }
+    }
+
+    function saveReports() {
+      localStorage.setItem(BUG_STORAGE_KEY, JSON.stringify(reports));
+    }
+
+    function renderBugList() {
+      bugList.innerHTML = "";
+      const pending = reports.filter((report) => report.status !== "resolved");
+
+      pending.forEach((report) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `bug-item${selectedId === report.id ? " active" : ""}`;
+        btn.innerHTML = `
+          <span class="bug-title">${report.title}</span>
+          <span class="bug-meta">${report.email} • ${formatTime(report.createdAt)}</span>
+        `;
+
+        btn.addEventListener("click", () => {
+          selectedId = report.id;
+          renderBugList();
+          renderDetail();
+        });
+
+        bugList.appendChild(btn);
+      });
+
+      if (!bugList.children.length) {
+        bugList.innerHTML = '<p class="detail-empty">No pending bug reports.</p>';
+      }
+    }
+
+    function renderDetail() {
+      const report = reports.find(
+        (item) => item.id === selectedId && item.status !== "resolved"
+      );
+
+      if (!report) {
+        detailArea.innerHTML =
+          '<p class="detail-empty">Click a reported bug from the left panel to view full details here.</p>';
+        return;
+      }
+
+      detailArea.innerHTML = `
+        <h3>${report.title}</h3>
+        <p class="detail-meta">Reported by ${report.email} • ${formatTime(report.createdAt)}</p>
+        <p class="detail-text">${report.details}</p>
+        <button type="button" class="resolve-btn" id="resolveBtn">Mark as resolved</button>
+      `;
+
+      document.getElementById("resolveBtn").addEventListener("click", () => {
+        const index = reports.findIndex((item) => item.id === report.id);
+        if (index === -1) return;
+        reports[index].status = "resolved";
+        reports[index].updatedAt = new Date().toISOString();
+        saveReports();
+        selectedId = null;
+        renderBugList();
+        renderDetail();
+        renderResolved();
+      });
+    }
+
+    function renderResolved() {
+      const items = reports.filter((item) => item.status === "resolved");
+      resolvedList.innerHTML = "";
+
+      if (!items.length) {
+        resolvedEmpty.style.display = "block";
+        return;
+      }
+
+      resolvedEmpty.style.display = "none";
+
+      items.forEach((item) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span class="resolved-text">${item.title} • ${formatTime(item.updatedAt || item.createdAt)}</span>
+          <button type="button" class="delete-btn" data-id="${item.id}">Delete</button>
+        `;
+        resolvedList.appendChild(li);
+      });
+
+      resolvedList.querySelectorAll(".delete-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+          const id = button.dataset.id;
+          reports = reports.filter((item) => item.id !== id);
+          saveReports();
+          renderBugList();
+          renderDetail();
+          renderResolved();
+        });
+      });
+    }
+
+    function initAdmin() {
+      loadReports();
+      renderBugList();
+      renderDetail();
+      renderResolved();
+    }
+
+    initAdmin();
+
+    logoutBtn.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

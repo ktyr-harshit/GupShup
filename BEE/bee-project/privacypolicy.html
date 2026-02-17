@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --line: #dbe4ef;
+      --white: #ffffff;
+      --hero-bg: #050709;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    .site-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 24px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 230px;
+    }
+
+    .gs-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #000;
+      border: 1px solid #0f172a;
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.16);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      color: #334155;
+      text-decoration: none;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links a.active {
+      border-color: #0f172a;
+      background: #0f172a;
+      color: #ffffff;
+    }
+
+    .hero {
+      min-height: 400px;
+      color: #fff;
+      padding: 72px clamp(20px, 8vw, 110px);
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 28px;
+      background:
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1), transparent 56%),
+        radial-gradient(circle at 18% 85%, rgba(255, 255, 255, 0.07), transparent 48%),
+        repeating-linear-gradient(67deg, rgba(255, 255, 255, 0.06) 0 2px, transparent 2px 90px),
+        repeating-linear-gradient(141deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 78px),
+        var(--hero-bg);
+      border-bottom: 1px solid #111827;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      max-width: 760px;
+      align-self: center;
+    }
+
+    .hero-kicker {
+      margin: 0 0 12px;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: clamp(44px, 8vw, 92px);
+      line-height: 0.95;
+      letter-spacing: -1.8px;
+    }
+
+    .hero-mark {
+      align-self: center;
+      justify-self: center;
+      width: min(42vw, 520px);
+      max-width: 100%;
+      border-radius: 24px;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.45));
+    }
+
+    .content-wrap {
+      max-width: 1460px;
+      margin: 30px auto;
+      padding: 0 24px 24px;
+    }
+
+    .content {
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+      color: #334155;
+      line-height: 1.6;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .content h3 {
+      margin: 18px 0 10px;
+      color: #0f172a;
+      font-size: 24px;
+      letter-spacing: 0.2px;
+    }
+
+    .content p,
+    .content li {
+      font-size: 17px;
+      text-align: justify;
+    }
+
+    .content ul {
+      margin-top: 8px;
+      padding-left: 22px;
+    }
+
+    .site-footer {
+      position: relative;
+      border-top: 1px solid var(--line);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .footer-links a {
+      color: #334155;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #0f172a;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1180px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-mark {
+        display: none;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .brand h1 {
+        font-size: 26px;
+      }
+
+      .hero {
+        min-height: 360px;
+        padding: 48px 24px;
+      }
+
+      .content-wrap {
+        padding: 0 16px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img class="gs-logo" src="gupshup-logo.png" alt="Gupshup logo" />
+      <h1>Privacy Policy</h1>
+    </div>
+
+    <nav class="nav-links" aria-label="Policy links">
+      <a href="privacypolicy.html" class="active">Privacy Policy</a>
+      <a href="Terms.html">Terms of Service</a>
+      <a href="helpcenter.html">Help Center</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-label="Privacy policy heading">
+    <div class="hero-left">
+      <p class="hero-kicker"></p>
+      <h2>Privacy<br />Policy</h2>
+    </div>
+    <img class="hero-mark" src="gupshup-logo.png" alt="Gupshup" />
+  </section>
+
+  <main class="content-wrap">
+    <article class="content">
+      <p><strong>Effective Date:</strong> January 15, 2026</p>
+      <p>
+        This Privacy Policy explains how our real-time chatting application and related services (the "Service") collect, use, store, and share your information when you use the Service.
+      </p>
+
+      <h3>1. Information We Collect</h3>
+      <ul>
+        <li>Account information, such as username, email address, and encrypted password.</li>
+        <li>Profile information you choose to provide.</li>
+        <li>Message data, media, and other content you send through the Service.</li>
+        <li>Device and usage information, including log data, browser type, and IP address.</li>
+        <li>Cookies or similar technologies for authentication, preferences, and analytics.</li>
+      </ul>
+
+      <h3>2. How We Use Information</h3>
+      <ul>
+        <li>To provide, maintain, and improve the Service.</li>
+        <li>To authenticate users and secure accounts.</li>
+        <li>To deliver messages and support real-time communication features.</li>
+        <li>To prevent abuse, spam, fraud, and other harmful activity.</li>
+        <li>To communicate service updates, support responses, and policy changes.</li>
+      </ul>
+
+      <h3>3. Legal Bases for Processing</h3>
+      <p>
+        Where required by law, we process your information based on legitimate interests, performance of a contract, compliance with legal obligations, and your consent (when applicable).
+      </p>
+
+      <h3>4. Sharing of Information</h3>
+      <p>We may share information with:</p>
+      <ul>
+        <li>Service providers that support hosting, analytics, security, and infrastructure.</li>
+        <li>Authorities or legal entities when required by law or to protect rights and safety.</li>
+        <li>Other parties in connection with a merger, acquisition, or business transfer.</li>
+      </ul>
+      <p>We do not sell your personal information.</p>
+
+      <h3>5. Data Retention</h3>
+      <p>
+        We keep personal information for as long as needed to provide the Service, comply with legal obligations, resolve disputes, and enforce agreements. Retention periods may vary by data type and legal requirements.
+      </p>
+
+      <h3>6. Data Security</h3>
+      <p>
+        We use reasonable administrative, technical, and organizational safeguards to protect personal information. No system is perfectly secure, and we cannot guarantee absolute security.
+      </p>
+
+      <h3>7. Your Rights and Choices</h3>
+      <ul>
+        <li>You can review and update certain account information from your profile settings.</li>
+        <li>You may request access, correction, or deletion of personal information where applicable by law.</li>
+        <li>You may disable cookies in your browser settings, though some features may not work properly.</li>
+      </ul>
+
+      <h3>8. Children's Privacy</h3>
+      <p>
+        The Service is not intended for children under the minimum legal age in their jurisdiction. We do not knowingly collect personal information from children where prohibited by law.
+      </p>
+
+      <h3>9. International Data Transfers</h3>
+      <p>
+        Your information may be processed in countries other than where you live. We take steps to ensure appropriate safeguards for cross-border data transfers where required.
+      </p>
+
+      <h3>10. Changes to This Policy</h3>
+      <p>
+        We may update this Privacy Policy from time to time. If material changes are made, we will update the date in this page and provide notice where required.
+      </p>
+
+      <h3>11. Contact</h3>
+      <p>
+        If you have questions about this Privacy Policy, contact us at <strong>support@yourchatapp.com</strong>.
+      </p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <span>© 2026 GS Chat</span>
+      <a href="helpcenter.html">Help Center</a>
+      <a href="reportbug.html">Report a bug</a>
+      <a href="Terms.html">Terms of Service</a>
+      <a href="privacypolicy.html">Privacy Policy</a>
+      <a href="mailto:support@yourchatapp.com">Contact</a>
+    </div>
+  </footer>
+</body>
+</html>
